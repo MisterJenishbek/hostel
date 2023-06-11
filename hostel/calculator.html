@@ -13,6 +13,8 @@
             border: 1px solid black;
             margin: auto;
             padding: 5px;
+            display: flex;
+            flex-direction: column;
         }
 
         .addUser {
@@ -30,7 +32,47 @@
         }
 
         .userPrice {
-            width: 10%;
+            width: 12%;
+            text-align: center;
+        }
+
+        .allRecord {
+            width: 308px;
+            min-height: 30px;
+            margin-top: 10px;
+            /* border: 1px solid black; */
+            padding: 0px 5px 5px 5px;
+        }
+
+        .newRecord {
+            width: 308px;
+            height: 30px;
+            margin-top: 5px;
+            /* border: 1px solid black; */
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .pook {
+            width: 75px;
+            height: 20px;
+            /* border: 1px solid black; */
+            text-align: center;
+        }
+
+        .btnDel {
+            width: 20px;
+            height: 20px;
+            /* border: 1px solid black; */
+            text-align: center;
+            color: brown;
+            font-size: 20px;
+        }
+
+        .date {
+            width: 15px;
+            height: 30px;
         }
     </style>
 </head>
@@ -44,9 +86,73 @@
                 <option атрибуты> Стирка </option>
             </select>
             <input class="userPrice" placeholder="цена">
-            <button class="btn">добавить</button>
+            <button class="btn">Добавить</button>
+        </div>
+        <div class="allRecord">
+
         </div>
     </div>
+
+    <script>
+        let select = document.querySelector('select');
+        let btn = document.querySelector('.btn');
+        let UsName = document.querySelector('.userName');
+        let UsPrice = document.querySelector('.userPrice');
+        let allRecord = document.querySelector('.allRecord');
+        let arr = [];
+        let num = 0;
+
+        btn.addEventListener('click', function () {
+            saveUser(num);
+        });
+
+        function saveUser(elem) {
+            arr.push(elem);
+            let newRecord = document.createElement('div');
+            newRecord.className = 'newRecord';
+
+            let date = document.createElement('div');
+            date.className = 'date';
+            date.textContent = new Date().getDate();
+            newRecord.appendChild(date);
+
+            let name = document.createElement('div');
+            name.className = 'pook';
+            name.textContent = UsName.value;
+            UsName.value = '';
+            newRecord.appendChild(name);
+
+            let sel = document.createElement('div');
+            sel.className = 'pook';
+            sel.textContent = select.value;
+            newRecord.appendChild(sel);
+
+            let price = document.createElement('div');
+            price.className = 'pook';
+            price.textContent = UsPrice.value;
+            UsPrice.value = '';
+            newRecord.appendChild(price);
+
+            let btnDel = document.createElement('div');
+            btnDel.className = 'btnDel';
+            btnDel.textContent = 'X';
+
+
+            btnDel.addEventListener('click', function (event) {
+                let i = arr.indexOf(newRecord.textContent);
+                if (i >= 0) {
+                    arr.splice(i, 1);
+                }
+                newRecord.remove()
+                event.preventDefault();
+            })
+
+            newRecord.appendChild(btnDel);
+
+            allRecord.appendChild(newRecord);
+            num++;
+        }
+    </script>
 </body>
 
 </html>
